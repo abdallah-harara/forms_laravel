@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FormsController extends Controller
 {
@@ -56,12 +58,35 @@ class FormsController extends Controller
             'image' => 'required'
         ]);
         $folderName = date('Y/m');
-        foreach($request->image as $img){
-        $ex = $img ->getClientOriginalExtension();
-        $imgname = rand() . '_' . rand() . "_" . time() . $ex;
-        // $request->file('image')->getClientOriginalName();
-        $img->move(public_path('images/' . $folderName), $imgname);
+        foreach ($request->image as $img) {
+            $ex = $img->getClientOriginalExtension();
+            $imgname = rand() . '_' . rand() . "_" . time() . $ex;
+            // $request->file('image')->getClientOriginalName();
+            $img->move(public_path('images/' . $folderName), $imgname);
         }
+        dd($request->all());
+    }
+    function contact()
+    {
+        return view("forms.contact");
+    }
+
+    function contact_data(Request $request)
+    {
+        $request->validate([
+            'name'=> 'required',
+
+            'email'=> 'required',
+
+            'phone'=> 'required',
+
+            'subject'=> 'required',
+
+            'image'=> 'nullable|image',
+
+            'message'=> 'required',
+        ]);
+        Mail::to('admin@email.com')->send(new TestMail());
         dd($request->all());
     }
 }

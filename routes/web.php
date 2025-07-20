@@ -30,3 +30,6 @@ Route::post('form2_data', [FormsController::class, 'form2_data'])->name('form2_d
 //this form3 focuses on uploading multiple images with the same frame.
 Route::get('form3', [FormsController::class, 'form3'])->name('form3');
 Route::post('form3_data', [FormsController::class, 'form3_data'])->name('form3_data');
+// this is two route related contact us with email
+Route::get('contact', [FormsController::class, 'contact'])->name('contact');
+Route::post('contact_data', [FormsController::class, 'contact_data'])->name('contact_data');
